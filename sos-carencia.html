@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Saia da Angústia Agora · Protocolo Gratuito</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#0D0B0B;font-family:'Nunito',sans-serif;min-height:100vh;}
+  .screen{display:none;min-height:100vh;padding:48px 24px 60px;animation:fadeIn 0.4s ease;}
+  .screen.active{display:flex;flex-direction:column;align-items:center;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .wrap{max-width:400px;width:100%;}
+  .tag{font-family:'Nunito',sans-serif;font-size:10px;letter-spacing:4px;color:#C4848A;font-weight:700;text-transform:uppercase;margin-bottom:14px;}
+  h1{font-family:'Playfair Display',serif;font-size:36px;font-weight:800;color:#F0EAE4;line-height:1.2;margin-bottom:16px;}
+  h2{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;color:#F0EAE4;line-height:1.5;margin-bottom:12px;}
+  .body-text{font-family:'Nunito',sans-serif;font-size:14px;color:#8a7a74;line-height:1.8;margin-bottom:16px;}
+  .italic-text{font-family:'Playfair Display',serif;font-size:16px;font-style:italic;color:#8a7a74;line-height:1.75;margin-bottom:16px;}
+  .btn{background:linear-gradient(135deg,#C4848A,#9A80C0);color:#fff;border:none;border-radius:99px;padding:16px 0;font-size:15px;font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer;width:100%;letter-spacing:0.4px;transition:all 0.2s;margin-top:8px;}
+  .btn:disabled{background:#2a2020;color:#4a3e3a;cursor:default;}
+  .btn-rose{background:#C4848A;}
+  .btn-purple{background:#9A80C0;}
+  .btn-green{background:linear-gradient(135deg,#25D366,#128C7E);text-decoration:none;display:block;text-align:center;color:#fff;border-radius:99px;padding:15px 0;font-size:14px;font-family:'Nunito',sans-serif;font-weight:700;letter-spacing:0.4px;}
+  .btn-ghost{background:none;border:1px solid #3a2e2a;border-radius:99px;padding:12px 0;font-size:13px;font-family:'Nunito',sans-serif;color:#5a4e4a;cursor:pointer;width:100%;margin-top:10px;}
+  .card{background:#1a1515;border-radius:16px;padding:18px 20px;margin-bottom:20px;}
+  .card-rose{border:1px solid rgba(196,132,138,0.13);}
+  .quote{font-family:'Playfair Display',serif;font-size:15px;font-style:italic;color:#e8e0dc;line-height:1.82;}
+  .progress-bar{background:#2a1a1a;border-radius:99px;height:3px;margin-bottom:6px;}
+  .progress-fill{background:#C4848A;height:100%;border-radius:99px;transition:width 0.5s;}
+  .step-label{font-size:11px;color:#4a3a3a;text-align:right;margin-bottom:28px;}
+  .chip{padding:10px 14px;border-radius:99px;font-size:13px;font-family:'Nunito',sans-serif;border:1.5px solid #3a2020;background:#1a1515;color:#6a5a5a;cursor:pointer;transition:all 0.15s;}
+  .chip.on{border-color:#C4848A;background:rgba(196,132,138,0.12);color:#C4848A;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+  .action-card{background:#1a1515;border-radius:14px;padding:16px 18px;display:flex;gap:14px;align-items:flex-start;margin-bottom:10px;}
+  .action-num{font-family:'Playfair Display',serif;font-size:14px;color:#C4848A;font-weight:600;flex-shrink:0;}
+  .action-text{font-family:'Nunito',sans-serif;font-size:14px;color:#c0a8a8;line-height:1.7;}
+  .estado-btn{text-align:left;background:#1a1515;border:1.5px solid #3a2020;border-radius:18px;padding:18px 20px;cursor:pointer;transition:all 0.15s;width:100%;margin-bottom:12px;display:flex;align-items:center;gap:14px;}
+  .estado-btn:hover{border-color:rgba(196,132,138,0.4);}
+  .estado-emoji{font-size:28px;}
+  .estado-nome{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:#F0EAE4;margin-bottom:3px;}
+  .estado-desc{font-family:'Nunito',sans-serif;font-size:12px;color:#8a7a74;}
+  .tecnica-card{background:rgba(196,132,138,0.08);border:1px solid rgba(196,132,138,0.2);border-radius:16px;padding:18px 20px;margin-bottom:20px;}
+  .opcao-btn{text-align:left;padding:15px 18px;border-radius:14px;font-size:14px;font-family:'Nunito',sans-serif;border:1.5px solid #3a2020;background:#1a1515;color:#6a5a5a;cursor:pointer;transition:all 0.15s;line-height:1.6;width:100%;margin-bottom:8px;}
+  .opcao-btn.on{border-color:#C4848A;background:rgba(196,132,138,0.1);color:#F0EAE4;}
+  .before-after{border-radius:14px;padding:13px 18px;display:flex;align-items:center;gap:12px;text-align:left;margin-bottom:8px;}
+  .ba-label{font-size:10px;letter-spacing:2px;font-weight:700;flex-shrink:0;}
+  .ba-text{font-family:'Playfair Display',serif;font-size:14px;font-style:italic;line-height:1.6;}
+  .divider{width:40px;height:2px;background:#C4848A;margin:0 auto 20px;}
+  .glow{position:fixed;top:15%;left:50%;transform:translateX(-50%);width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(196,132,138,0.09) 0%,transparent 70%);pointer-events:none;z-index:0;}
+  .cover-items{display:flex;flex-direction:column;gap:10px;margin-bottom:36px;}
+  .cover-item{display:flex;align-items:center;gap:14px;}
+  .cover-num{width:32px;height:32px;border-radius:99px;border:1.5px solid rgba(196,132,138,0.27);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Playfair Display',serif;color:#C4848A;font-size:12px;}
+  .hidden{display:none;}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div id="cover" class="screen active" style="justify-content:center;position:relative;overflow:hidden;">
+  <div class="glow"></div>
+  <div class="wrap" style="text-align:center;position:relative;">
+    <p class="tag">Protocolo Gratuito</p>
+    <h1>Saia da angústia<br/>agora.</h1>
+    <div class="divider"></div>
+    <p class="italic-text">Aquele aperto no peito. A necessidade que não para. A vontade de mandar mensagem mesmo sabendo que não devia.</p>
+    <p class="body-text">Em 5 minutos você vai regular isso — sem precisar entender nada, sem precisar ser forte. Só fazer.</p>
+    <div class="cover-items">
+      <div class="cover-item"><div class="cover-num">01</div><p style="font-family:'Nunito',sans-serif;font-size:14px;color:#6a5a5a;">Para a espiral agora</p></div>
+      <div class="cover-item"><div class="cover-num">02</div><p style="font-family:'Nunito',sans-serif;font-size:14px;color:#6a5a5a;">Sente o que está acontecendo no corpo</p></div>
+      <div class="cover-item"><div class="cover-num">03</div><p style="font-family:'Nunito',sans-serif;font-size:14px;color:#6a5a5a;">Sai do modo automático</p></div>
+      <div class="cover-item"><div class="cover-num">04</div><p style="font-family:'Nunito',sans-serif;font-size:14px;color:#6a5a5a;">Decide de forma consciente</p></div>
+    </div>
+    <button class="btn" onclick="go('s1')">Quero sair dessa agora</button>
+    <p style="font-size:11px;color:#3a2a2a;margin-top:14px;">Gratuito · 5 minutos · Sem cadastro</p>
+  </div>
+</div>
+
+<!-- STEP 1: PARE -->
+<div id="s1" class="screen">
+  <div class="wrap">
+    <div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div>
+    <p class="step-label">Passo 1 de 4</p>
+    <p class="tag">Passo 1 · Pare</p>
+    <h2>Antes de qualquer coisa — interrompa agora.</h2>
+    <p class="body-text">Quando a carência bate, o corpo entra em modo de busca compulsiva. Você precisa interromper esse estado fisicamente — não mentalmente.</p>
+    <div class="action-card"><span class="action-num">01</span><span class="action-text">Levante-se agora. Mesmo que por 10 segundos.</span></div>
+    <div class="action-card"><span class="action-num">02</span><span class="action-text">Sacuda as mãos com força — como se estivesse jogando algo fora.</span></div>
+    <div class="action-card"><span class="action-num">03</span><span class="action-text">Diga em voz alta: "Eu estou aqui. Estou bem. Isso vai passar."</span></div>
+    <div class="card card-rose" style="margin-top:20px;">
+      <p class="quote">"A carência não é fraqueza. É o sistema nervoso pedindo regulação. Agora você vai dar isso pra ele."</p>
+    </div>
+    <button class="btn btn-rose" id="s1-btn1" onclick="s1Feito()">Fiz os três passos</button>
+    <button class="btn btn-purple hidden" id="s1-btn2" onclick="go('s2')">Continuar →</button>
+  </div>
+</div>
+
+<!-- STEP 2: SINTA -->
+<div id="s2" class="screen">
+  <div class="wrap">
+    <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
+    <p class="step-label">Passo 2 de 4</p>
+    <p class="tag">Passo 2 · Sinta</p>
+    <h2>O que você está sentindo agora no corpo?</h2>
+    <p class="body-text">Não analise. Não julgue. Só marque o que está presente agora.</p>
+    <div class="chips" id="chips-s2">
+      <button class="chip" onclick="toggleChip(this,'s2')">Aperto no peito</button>
+      <button class="chip" onclick="toggleChip(this,'s2')">Vazio no estômago</button>
+      <button class="chip" onclick="toggleChip(this,'s2')">Garganta fechada</button>
+      <button class="chip" onclick="toggleChip(this,'s2')">Agitação nas mãos</button>
+      <button class="chip" onclick="toggleChip(this,'s2')">Cabeça acelerada</button>
+      <button class="chip" onclick="toggleChip(this,'s2')">Peso nos ombros</button>
+      <button class="chip" onclick="toggleChip(this,'s2')">Inquietação no corpo todo</button>
+      <button class="chip" onclick="toggleChip(this,'s2')">Coração acelerado</button>
+    </div>
+    <div id="s2-next" class="hidden">
+      <div class="card card-rose">
+        <p style="font-family:'Nunito',sans-serif;font-size:13px;color:#8a7a74;margin-bottom:8px;">Agora coloque a mão no lugar que sente mais intensamente.</p>
+        <p class="quote" style="font-size:15px;">Respire fundo. Expire devagar. Não tente mudar o que sente — só perceba que você consegue estar com isso.</p>
+      </div>
+      <button class="btn" onclick="go('s3')">Senti. Continuar →</button>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 3: REGULE -->
+<div id="s3" class="screen">
+  <div class="wrap">
+    <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
+    <p class="step-label">Passo 3 de 4</p>
+    <p class="tag">Passo 3 · Regule</p>
+
+    <div id="s3-escolha">
+      <h2>Como você está agora?</h2>
+      <p class="body-text">Escolha o que mais se parece com o que você sente agora.</p>
+      <button class="estado-btn" onclick="escolherEstado('panico')">
+        <span class="estado-emoji">💗</span>
+        <div><p class="estado-nome">Em pânico</p><p class="estado-desc">Coração acelerado, pensamentos em espiral</p></div>
+      </button>
+      <button class="estado-btn" onclick="escolherEstado('vazio')">
+        <span class="estado-emoji">🌑</span>
+        <div><p class="estado-nome">Pesada e vazia</p><p class="estado-desc">Vazio por dentro, aquela saudade que aperta</p></div>
+      </button>
+      <button class="estado-btn" onclick="escolherEstado('acelerada')">
+        <span class="estado-emoji">⚡</span>
+        <div><p class="estado-nome">Acelerada</p><p class="estado-desc">Querendo agir, mandar mensagem, resolver agora</p></div>
+      </button>
+    </div>
+
+    <div id="s3-tecnica" class="hidden">
+      <h2 id="s3-titulo"></h2>
+      <p class="body-text">Faça isso agora — antes de ler o próximo passo.</p>
+      <div class="tecnica-card">
+        <p style="font-family:'Playfair Display',serif;font-size:16px;font-style:italic;color:#F0EAE4;line-height:1.6;margin-bottom:16px;" id="s3-instrucao"></p>
+        <div id="s3-passos"></div>
+      </div>
+      <button class="btn btn-rose" onclick="s3Feito()">Fiz. O que aconteceu?</button>
+    </div>
+
+    <div id="s3-resultado" class="hidden">
+      <h2>Seu corpo está mais regulado agora.</h2>
+      <div class="card card-rose">
+        <p class="quote" id="s3-mensagem"></p>
+      </div>
+      <button class="btn" onclick="go('s4')" style="margin-top:16px;">Entendi. Continuar →</button>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 4: DECIDA -->
+<div id="s4" class="screen">
+  <div class="wrap">
+    <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+    <p class="step-label">Passo 4 de 4</p>
+    <p class="tag">Passo 4 · Decida</p>
+    <h2>O que você vai fazer agora — com consciência.</h2>
+    <p class="body-text">Não o que a carência quer. O que você, consciente, decide fazer agora.</p>
+    <button class="opcao-btn" onclick="escolherOpcao(this)">Não vou agir agora. Vou esperar 24 horas antes de qualquer contato.</button>
+    <button class="opcao-btn" onclick="escolherOpcao(this)">Vou fazer algo só por mim nos próximos 30 minutos.</button>
+    <button class="opcao-btn" onclick="escolherOpcao(this)">Vou ligar para alguém de confiança — não para falar sobre ele.</button>
+    <button class="opcao-btn" onclick="escolherOpcao(this)">Vou sair do ambiente onde estou agora e me mover.</button>
+    <div id="s4-resultado" class="hidden" style="margin-top:8px;">
+      <div class="card card-rose">
+        <p class="quote">"Você não agiu no automático. Você decidiu com consciência. Isso é autorregulação real — e você acabou de provar que consegue."</p>
+      </div>
+      <button class="btn" onclick="go('final')" style="margin-top:8px;">Concluir ✦</button>
+    </div>
+  </div>
+</div>
+
+<!-- FINAL -->
+<div id="final" class="screen" style="justify-content:center;">
+  <div class="wrap" style="text-align:center;">
+    <p style="font-family:'Playfair Display',serif;font-size:52px;color:#C4848A;margin-bottom:16px;">✦</p>
+    <p class="tag" style="text-align:center;">Você passou pela crise.</p>
+    <h2 style="font-size:24px;font-weight:600;text-align:center;margin-bottom:24px;">Você não agiu no impulso.<br/>Você se regulou.</h2>
+
+    <div style="margin-bottom:24px;">
+      <div class="before-after" style="background:#1a1515;">
+        <span class="ba-label" style="color:#4a3e3a;">Antes</span>
+        <span class="ba-text" style="color:#6a5e5a;">A carência estava no controle.</span>
+      </div>
+      <div class="before-after" style="background:rgba(196,132,138,0.1);border:1px solid rgba(196,132,138,0.2);">
+        <span class="ba-label" style="color:#C4848A;">Agora</span>
+        <span class="ba-text" style="color:#F0EAE4;">Você tomou o controle de volta.</span>
+      </div>
+      <div class="before-after" style="background:#1a1515;margin-top:8px;">
+        <span class="ba-label" style="color:#4a3e3a;">Antes</span>
+        <span class="ba-text" style="color:#6a5e5a;">Você estava no automático.</span>
+      </div>
+      <div class="before-after" style="background:rgba(196,132,138,0.1);border:1px solid rgba(196,132,138,0.2);">
+        <span class="ba-label" style="color:#C4848A;">Agora</span>
+        <span class="ba-text" style="color:#F0EAE4;">Você decidiu com consciência.</span>
+      </div>
+    </div>
+
+    <div class="card" style="border:1px solid rgba(196,132,138,0.13);text-align:left;">
+      <p class="tag" style="margin-bottom:10px;">Quer continuar esse trabalho?</p>
+      <p class="quote" style="margin-bottom:10px;">Esse protocolo resolve a crise do momento. Mas a carência vai voltar enquanto a raiz estiver intacta.</p>
+      <p style="font-family:'Nunito',sans-serif;font-size:13px;color:#8a7a74;line-height:1.75;margin-bottom:18px;">Entro em contato com mulheres que querem ir mais fundo — entender o padrão, sair da dependência emocional e se reconectar consigo mesmas.</p>
+      <a href="https://wa.me/5567981448229" target="_blank" class="btn-green">Falar com a Renata no WhatsApp →</a>
+    </div>
+
+    <button class="btn-ghost" onclick="go('cover')">Fazer de novo</button>
+  </div>
+</div>
+
+<script>
+const ESTADOS = {
+  panico: {
+    titulo: "Em pânico",
+    instrucao: "Coloque as duas mãos no peito agora.",
+    tecnica: ["Inspire pelo nariz contando até 4.","Segure por 2 segundos.","Expire pela boca bem devagar contando até 6.","Repita 3 vezes. Só isso."],
+    mensagem: "O pânico é o sistema nervoso em alarme falso. A respiração longa na expiração diz para o corpo: não há perigo. Você está regulando agora.",
+  },
+  vazio: {
+    titulo: "Pesada e vazia",
+    instrucao: "Sente-se no chão ou pressione as costas na parede.",
+    tecnica: ["Sinta o peso do seu corpo — o chão te sustenta.","Pressione os pés no chão devagar.","Coloque as mãos nas coxas — pesadas, quentes.","Respire e perceba: você está inteira aqui."],
+    mensagem: "O vazio não é ausência sua — é o espaço que você deu para ele ocupar. Sentir o peso do próprio corpo te devolve para dentro de si mesma.",
+  },
+  acelerada: {
+    titulo: "Acelerada",
+    instrucao: "Levante e sacuda o corpo inteiro por 20 segundos.",
+    tecnica: ["Sacuda os braços, as mãos, os ombros.","Bata os pés no chão alternando — esquerdo, direito.","Faça um som 'vvvvv' com os lábios fechados enquanto sacode.","Para. Fique imóvel. Sinta o calor no corpo."],
+    mensagem: "A aceleração é energia de ação sem direção. O movimento intencional descarrega isso — e o 'vvvv' ativa o nervo vago, que é o freio natural do sistema nervoso.",
+  },
+};
+
+function go(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById(id);
+  el.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function s1Feito() {
+  document.getElementById('s1-btn1').classList.add('hidden');
+  document.getElementById('s1-btn2').classList.remove('hidden');
+}
+
+function toggleChip(btn, step) {
+  btn.classList.toggle('on');
+  if (step === 's2') {
+    const any = document.querySelectorAll('#chips-s2 .chip.on').length > 0;
+    document.getElementById('s2-next').classList.toggle('hidden', !any);
+  }
+}
+
+function escolherEstado(id) {
+  const e = ESTADOS[id];
+  document.getElementById('s3-titulo').textContent = e.titulo;
+  document.getElementById('s3-instrucao').textContent = e.instrucao;
+  document.getElementById('s3-passos').innerHTML = e.tecnica.map((t, i) =>
+    `<div style="display:flex;gap:12px;margin-bottom:10px;">
+      <span style="font-family:'Playfair Display',serif;color:#C4848A;font-size:14px;font-weight:600;flex-shrink:0;">${i+1}</span>
+      <p style="font-family:'Nunito',sans-serif;font-size:14px;color:#c0a8a8;line-height:1.65;margin:0;">${t}</p>
+    </div>`
+  ).join('');
+  document.getElementById('s3-mensagem').textContent = e.mensagem;
+  document.getElementById('s3-escolha').classList.add('hidden');
+  document.getElementById('s3-tecnica').classList.remove('hidden');
+}
+
+function s3Feito() {
+  document.getElementById('s3-tecnica').classList.add('hidden');
+  document.getElementById('s3-resultado').classList.remove('hidden');
+}
+
+function escolherOpcao(btn) {
+  document.querySelectorAll('.opcao-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('s4-resultado').classList.remove('hidden');
+}
+</script>
+</body>
+</html>
